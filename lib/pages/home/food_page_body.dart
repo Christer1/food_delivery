@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:food_delivery/controllers/cart_controller..dart';
 import 'package:food_delivery/controllers/popular_product_controller.dart';
 import 'package:food_delivery/controllers/recommended_controller.dart';
 import 'package:food_delivery/models/products_model.dart';
@@ -47,13 +48,15 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   @override
   void dispose() {
     pageController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Get.find<PopularProductController>().initProduct(Get.find<CartController>());
+    Get.find<CartController>();
     return Column(children: [
       //slider section
-
       GetBuilder<PopularProductController>(builder:(popularProducts){
         return  popularProducts.isLoaded ? Container(
                   height: Dimensions.pageView,
@@ -117,7 +120,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Get.toNamed(RouteHelper.getRecommendedFood(index));
+                      Get.toNamed(RouteHelper.getRecommendedFood(index, "home"));
                     },
                     child: Container(
                       margin: EdgeInsets.only(
@@ -241,7 +244,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteHelper.getPopularFood(index));
+              Get.toNamed(RouteHelper.getPopularFood(index, "home"));
             },
             child: Container(
               height: Dimensions.pageViewContainer,
